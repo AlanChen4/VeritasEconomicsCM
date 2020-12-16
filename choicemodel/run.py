@@ -67,6 +67,6 @@ class ChoiceModelApp(wx.App):
         self.frame.Show()
 
 
-if __name__ == '__main__':
+def run():
     app = ChoiceModelApp()
     app.MainLoop()
