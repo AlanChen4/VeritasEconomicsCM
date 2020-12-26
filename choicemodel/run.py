@@ -1,11 +1,13 @@
 import wx
 
+from .two_tou import TwoTOU
+
 
 class ChoiceModelFrame(wx.Frame):
 
     def __init__(self):
         super().__init__(None, title="Veritas Economics")
-        self.SetSize((300, 300))
+        self.SetSize((1000, 600))
         self.panel = wx.Panel(self)
         self.init_ui()
 
@@ -48,6 +50,12 @@ class ChoiceModelFrame(wx.Frame):
         calculate_sizer.Add(calculate_button, proportion=1, flag=wx.ALL, border=10)
         vbox.Add(calculate_sizer, flag=wx.ALL | wx.EXPAND)
 
+        two_time_plans_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        two_time_plans_button = wx.Button(self.panel, label="Two Time-of-Use (TOU) Plans")
+        two_time_plans_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
+        two_time_plans_sizer.Add(two_time_plans_button, proportion=1, flag=wx.ALL, border=10)
+        vbox.Add(two_time_plans_sizer, flag=wx.ALL | wx.EXPAND)
+
         self.panel.SetSizer(vbox)
 
     @staticmethod
@@ -57,6 +65,11 @@ class ChoiceModelFrame(wx.Frame):
         graph_panel.SetBackgroundColour('white')
         graph_label = wx.StaticText(graph_panel, label='This is a graph')
         graph_frame.Show()
+
+    def calculate_two_tou(self, *args):
+        two_tou_frame = TwoTOU(title="Two TOU",
+                               parent=wx.GetTopLevelParent(self))
+        two_tou_frame.Show()
 
 
 class ChoiceModelApp(wx.App):
