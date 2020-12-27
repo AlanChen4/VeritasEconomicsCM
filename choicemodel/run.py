@@ -1,5 +1,7 @@
 import wx
 
+from .one_each import OneEach
+from .two_fixed import TwoFixed
 from .two_tou import TwoTOU
 
 
@@ -16,21 +18,35 @@ class ChoiceModelFrame(wx.Frame):
 
         vbox = wx.BoxSizer(wx.VERTICAL)
 
-        two_time_plans_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        two_time_plans_button = wx.Button(self.panel, label="Two Time-of-Use (TOU) Plans")
-        two_time_plans_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
-        two_time_plans_sizer.Add(two_time_plans_button, proportion=1, flag=wx.ALL, border=10)
-        vbox.Add(two_time_plans_sizer, flag=wx.ALL | wx.EXPAND)
+        one_each_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        one_each_button = wx.Button(self.panel, label="One Fixed One TOU")
+        one_each_button.Bind(wx.EVT_BUTTON, self.calculate_one_each)
+        one_each_sizer.Add(one_each_button, proportion=1, flag=wx.ALL, border=10)
+        vbox.Add(one_each_sizer, flag=wx.ALL | wx.EXPAND)
+
+        two_fixed_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        two_fixed_button = wx.Button(self.panel, label="Two Fixed Plans")
+        two_fixed_button.Bind(wx.EVT_BUTTON, self.calculate_two_fixed)
+        two_fixed_sizer.Add(two_fixed_button, proportion=1, flag=wx.ALL, border=10)
+        vbox.Add(two_fixed_sizer, flag=wx.ALL | wx.EXPAND)
+
+        two_time_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        two_time_button = wx.Button(self.panel, label="Two Time-of-Use (TOU) Plans")
+        two_time_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
+        two_time_sizer.Add(two_time_button, proportion=1, flag=wx.ALL, border=10)
+        vbox.Add(two_time_sizer, flag=wx.ALL | wx.EXPAND)
 
         self.panel.SetSizer(vbox)
 
-    @staticmethod
-    def calculate_plan(self, *args):
-        graph_frame = wx.Frame(None)
-        graph_panel = wx.Panel(graph_frame)
-        graph_panel.SetBackgroundColour('white')
-        graph_label = wx.StaticText(graph_panel, label='This is a graph')
-        graph_frame.Show()
+    def calculate_one_each(self, *args):
+        one_each_frame = TwoTOU(title="One TOU and One Fixed",
+                               parent=wx.GetTopLevelParent(self))
+        one_each_frame.Show()
+
+    def calculate_two_fixed(self, *args):
+        two_fixed_frame = TwoTOU(title="Two Fixed",
+                               parent=wx.GetTopLevelParent(self))
+        two_fixed_frame.Show()
 
     def calculate_two_tou(self, *args):
         two_tou_frame = TwoTOU(title="Two TOU",
