@@ -39,13 +39,13 @@ class ChoiceModelFrame(wx.Frame):
         self.panel.SetSizer(vbox)
 
     def calculate_one_each(self, *args):
-        one_each_frame = TwoTOU(title="One TOU and One Fixed",
-                               parent=wx.GetTopLevelParent(self))
+        one_each_frame = OneEach(title="One TOU and One Fixed",
+                                 parent=wx.GetTopLevelParent(self))
         one_each_frame.Show()
 
     def calculate_two_fixed(self, *args):
-        two_fixed_frame = TwoTOU(title="Two Fixed",
-                               parent=wx.GetTopLevelParent(self))
+        two_fixed_frame = TwoFixed(title="Two Fixed",
+                                   parent=wx.GetTopLevelParent(self))
         two_fixed_frame.Show()
 
     def calculate_two_tou(self, *args):
