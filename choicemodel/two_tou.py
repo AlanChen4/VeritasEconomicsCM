@@ -84,7 +84,7 @@ class TwoTOU(wx.Frame):
         tou_b_label = wx.StaticText(self, label='Time-of-Use (TOU) B')
         tou_b_sizer.Add(tou_b_label, proportion=1, flag=wx.ALL, border=10)
 
-        plans_sizer.Add(tou_b_sizer, proportion=1, flag=wx.ALL | wx.EXPAND)
+        plans_sizer.Add(tou_b_sizer)
 
         # off peak price
         off_peak_sizer_b = wx.BoxSizer(wx.HORIZONTAL)
@@ -131,9 +131,40 @@ class TwoTOU(wx.Frame):
             'Price B',
             'Price C'
         ])
-        peak_season_sizer_b.Add(peak_season_b, proportion=1, flag=wx.ALL | wx.EXPAND, border=10)
+        peak_season_sizer_b.Add(peak_season_b, proportion=1, flag=wx.ALL, border=10)
         tou_b_sizer.Add(peak_season_sizer_b)
 
+        # Spacer between calculate buttons
+        results_spacer_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        results_spacer = wx.StaticText(self, label='Results - Predictions of Potential Market Size')
+        results_spacer_sizer.Add(results_spacer, flag=wx.ALL, border=10)
+
+        # calculate service
+        calculate_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        calculate_service_label = wx.StaticText(self, label='Potential Market Size')
+        calculate_sizer.Add(calculate_service_label, flag=wx.ALL, border=10)
+
+        # service territory
+        service_sizer = wx.BoxSizer(wx.VERTICAL)
+        service_label = wx.StaticText(self, label='Service Territory')
+        service_button = wx.Button(self, label='Calculate')
+        service_sizer.Add(service_label)
+        service_sizer.Add(service_button, flag=wx.ALL, border=10)
+        calculate_sizer.Add(service_sizer, flag=wx.LEFT, border=20)
+
+        # zip code
+        zip_sizer = wx.BoxSizer(wx.VERTICAL)
+        zip_label = wx.StaticText(self, label='By Zip Code')
+        zip_button = wx.Button(self, label='Calculate')
+        zip_sizer.Add(zip_label)
+        zip_sizer.Add(zip_button, flag=wx.ALL, border=10)
+        calculate_sizer.Add(zip_sizer, flag=wx.LEFT, border=20)
+
+        # Add all components to the main sizer in order
         vbox.Add(plans_sizer)
+        vbox.Add(results_spacer_sizer)
+        vbox.Add(calculate_sizer)
+
+        vbox.SetSizeHints(self)
         self.SetSizer(vbox)
 
