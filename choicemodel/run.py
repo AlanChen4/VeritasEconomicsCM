@@ -9,7 +9,6 @@ class ChoiceModelFrame(wx.Frame):
 
     def __init__(self):
         super().__init__(None, title="Veritas Economics")
-        self.SetSize((1000, 600))
         self.panel = wx.Panel(self)
         self.init_ui()
 
@@ -36,6 +35,7 @@ class ChoiceModelFrame(wx.Frame):
         two_time_sizer.Add(two_time_button, proportion=1, flag=wx.ALL, border=10)
         vbox.Add(two_time_sizer, flag=wx.ALL | wx.EXPAND)
 
+        vbox.SetSizeHints(self.panel)
         self.panel.SetSizer(vbox)
 
     def calculate_one_each(self, *args):
