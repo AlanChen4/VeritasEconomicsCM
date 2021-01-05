@@ -13,9 +13,24 @@ class ChoiceModelFrame(wx.Frame):
 
     def init_ui(self):
         self.SetBackgroundColour('cream')
-
         vbox = wx.BoxSizer(wx.VERTICAL)
 
+        # Title of the home page
+        title_font = wx.Font(wx.FontInfo(15))
+        title_label = wx.StaticText(self, label='Electricity Service Plan Preferences and Selection Probabilities',
+                                    style=wx.ALIGN_CENTER)
+        title_label.SetFont(title_font)
+
+        # Description under the title label
+        description_sizer = wx.BoxSizer(wx.VERTICAL)
+        description_label_one = wx.StaticText(self, label='Double click the module with the plans you want to evaluate',
+                                              style=wx.ALIGN_CENTER)
+        description_label_two = wx.StaticText(self, label='I want to evaluate:',
+                                              style=wx.ALIGN_CENTER)
+        description_sizer.Add(description_label_one, wx.CENTER, border=10, flag=wx.ALL | wx.EXPAND)
+        description_sizer.Add(description_label_two, wx.CENTER, border=10, flag=wx.ALL | wx.EXPAND)
+
+        # Used for adding the 3 buttons with their respective choices
         options_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         one_each_button = wx.Button(self, label="One Fixed One TOU")
@@ -30,7 +45,11 @@ class ChoiceModelFrame(wx.Frame):
         two_time_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
         options_sizer.Add(two_time_button, border=10, proportion=1, flag=wx.ALL | wx.EXPAND)
 
-        vbox.Add(options_sizer, flag=wx.ALL | wx.EXPAND)
+        # Add individual box sizer(s) to main box sizer(vbox)
+        vbox.Add(title_label, flag=wx.ALL | wx.EXPAND, border=20)
+        vbox.Add(description_sizer, wx.CENTER, flag=wx.EXPAND)
+        vbox.Add(options_sizer, flag=wx.EXPAND)
+
         vbox.SetSizeHints(self)
         self.SetSizer(vbox)
 
