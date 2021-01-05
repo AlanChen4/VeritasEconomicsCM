@@ -5,13 +5,11 @@ import pandas as pd
 # Read it from Excel as a Pandas DataFrame
 # Transpose it to make it so that market segments are rows and blocks are columns
 
-TNDatadf = pd.DataFrame.transpose(pd.read_excel(r'/home/MattBingham/TNdata.xlsx'))
-
-# print (TNDatadf)
+TNDatadf = pd.DataFrame.transpose(pd.read_excel('data/TNdata.xlsx'))
 
 # Convert the Pandas DataFrame to a NumPy Array
 # Hmm I know how to just grab a column - see below - but not all but 1st row 1st column
-# Do all of above except with unlabled data
+# Do all of above except with unlabeled data
 
 TNData = pd.DataFrame.transpose(pd.read_excel(r'/home/MattBingham/TNdataNoLabels.xlsx'))
 

@@ -9,34 +9,30 @@ class ChoiceModelFrame(wx.Frame):
 
     def __init__(self):
         super().__init__(None, title="Veritas Economics")
-        self.panel = wx.Panel(self)
         self.init_ui()
 
     def init_ui(self):
-        self.panel.SetBackgroundColour('cream')
+        self.SetBackgroundColour('cream')
 
         vbox = wx.BoxSizer(wx.VERTICAL)
 
-        one_each_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        one_each_button = wx.Button(self.panel, label="One Fixed One TOU")
+        options_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        one_each_button = wx.Button(self, label="One Fixed One TOU")
         one_each_button.Bind(wx.EVT_BUTTON, self.calculate_one_each)
-        one_each_sizer.Add(one_each_button, proportion=1, flag=wx.ALL, border=10)
-        vbox.Add(one_each_sizer, flag=wx.ALL | wx.EXPAND)
+        options_sizer.Add(one_each_button, border=10, proportion=1, flag=wx.ALL | wx.EXPAND)
 
-        two_fixed_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        two_fixed_button = wx.Button(self.panel, label="Two Fixed Plans")
+        two_fixed_button = wx.Button(self, label="Two Fixed Plans")
         two_fixed_button.Bind(wx.EVT_BUTTON, self.calculate_two_fixed)
-        two_fixed_sizer.Add(two_fixed_button, proportion=1, flag=wx.ALL, border=10)
-        vbox.Add(two_fixed_sizer, flag=wx.ALL | wx.EXPAND)
+        options_sizer.Add(two_fixed_button, border=10, proportion=1,  flag=wx.ALL | wx.EXPAND)
 
-        two_time_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        two_time_button = wx.Button(self.panel, label="Two Time-of-Use (TOU) Plans")
+        two_time_button = wx.Button(self, label="Two Time-of-Use (TOU) Plans")
         two_time_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
-        two_time_sizer.Add(two_time_button, proportion=1, flag=wx.ALL, border=10)
-        vbox.Add(two_time_sizer, flag=wx.ALL | wx.EXPAND)
+        options_sizer.Add(two_time_button, border=10, proportion=1, flag=wx.ALL | wx.EXPAND)
 
-        vbox.SetSizeHints(self.panel)
-        self.panel.SetSizer(vbox)
+        vbox.Add(options_sizer, flag=wx.ALL | wx.EXPAND)
+        vbox.SetSizeHints(self)
+        self.SetSizer(vbox)
 
     def calculate_one_each(self, *args):
         one_each_frame = OneEach(title="One TOU and One Fixed",
