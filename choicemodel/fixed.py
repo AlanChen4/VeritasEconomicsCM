@@ -17,14 +17,18 @@ class Fixed(wx.Panel):
 
         premium_sizer = wx.BoxSizer(wx.HORIZONTAL)
         premium_label = wx.StaticText(self, size=(150, 20), label='Premium (%)')
-        premium_rate = wx.ComboBox(self, choices=['Some %'])
+        premium_rate = wx.ComboBox(self, choices=[
+            '2%', '5%', '15%'
+        ])
 
         premium_sizer.Add(premium_label, flag=wx.ALL, border=10)
         premium_sizer.Add(premium_rate, flag=wx.ALL, border=10)
 
         contract_sizer = wx.BoxSizer(wx.HORIZONTAL)
         contract_label = wx.StaticText(self, size=(150,20), label='Contract Length')
-        contract_length = wx.ComboBox(self, choices=['Some Length'])
+        contract_length = wx.ComboBox(self, choices=[
+            '1 year', '2 years', '3 years'
+        ])
 
         contract_sizer.Add(contract_label, flag=wx.ALL, border=10)
         contract_sizer.Add(contract_length, flag=wx.ALL, border=10)
