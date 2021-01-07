@@ -1,8 +1,8 @@
 import wx
 
-from .fixed import Fixed
-from .results import Results
-from .status_quo import StatusQuo
+from .Components.fixed import Fixed
+from .Components.results import Results
+from .Components.status_quo import StatusQuo
 
 
 class TwoFixed(wx.Frame):

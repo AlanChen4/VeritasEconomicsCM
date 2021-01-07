@@ -1,9 +1,9 @@
 import wx
 
-from .fixed import Fixed
-from .results import Results
-from .status_quo import StatusQuo
-from .tou import TOU
+from .Components.fixed import Fixed
+from choicemodel.Components.results import Results
+from choicemodel.Components.status_quo import StatusQuo
+from choicemodel.Components.tou import TOU
 
 
 class OneEach(wx.Frame):

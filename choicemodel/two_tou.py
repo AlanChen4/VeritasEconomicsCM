@@ -1,8 +1,8 @@
 import wx
 
-from .results import Results
-from .status_quo import StatusQuo
-from .tou import TOU
+from .Components.results import Results
+from .Components.status_quo import StatusQuo
+from .Components.tou import TOU
 
 
 class TwoTOU(wx.Frame):
