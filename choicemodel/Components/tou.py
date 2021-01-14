@@ -24,17 +24,17 @@ class TOU(wx.Panel):
         peak_season_label = wx.StaticText(self, label='Peak Season', size=(150, 20))
 
         # Create inputs
-        off_peak_price_input = wx.ComboBox(self, choices=[
+        self.off_peak_price_input = wx.ComboBox(self, choices=[
             '$0.03', '$0.04', '$0.05', '$0.06', '$0.07', '$0.08', '$0.09',
         ])
-        peak_price_input = wx.ComboBox(self, choices=[
+        self.peak_price_input = wx.ComboBox(self, choices=[
             '$0.12', '$0.13', '$0.14', '$0.15', '$0.16', '$0.17', '$0.18',
             '$0.19', '$0.20', '$0.21', '$0.22', '$0.23', '$0.24', '$0.25',
             '$0.26', '$0.27', '$0.28', '$0.29', '$0.30', '$0.31', '$0.32',
             '$0.33', '$0.34', '$0.35', '$0.37', '$0.38', '$0.39', '$0.40',
             '$0.41', '$0.42', '$0.43', '$0.44', '$0.45'
         ])
-        peak_period_input = wx.ComboBox(self, choices=[
+        self.peak_period_input = wx.ComboBox(self, choices=[
             '(2 hours) 5PM to 7PM',
             '(3 hours) 2PM to 5PM',
             '(3 hours) 3PM to 6PM',
@@ -42,7 +42,7 @@ class TOU(wx.Panel):
             '(4 hours) 2PM to 6PM',
             '(6 hours) 2PM to 8PM'
         ])
-        peak_season_input = wx.ComboBox(self, choices=[
+        self.peak_season_input = wx.ComboBox(self, choices=[
             'Summer', 'Summer and Winter'
         ])
 
@@ -54,13 +54,13 @@ class TOU(wx.Panel):
 
         # Add labels and input to each respective sizer
         off_peak_price_sizer.Add(off_peak_price_label, border=10, flag=wx.ALL)
-        off_peak_price_sizer.Add(off_peak_price_input, border=10, flag=wx.ALL)
+        off_peak_price_sizer.Add(self.off_peak_price_input, border=10, flag=wx.ALL)
         peak_price_sizer.Add(peak_price_label, border=10, flag=wx.ALL)
-        peak_price_sizer.Add(peak_price_input, border=10, flag=wx.ALL)
+        peak_price_sizer.Add(self.peak_price_input, border=10, flag=wx.ALL)
         peak_period_sizer.Add(peak_period_label, border=10, flag=wx.ALL)
-        peak_period_sizer.Add(peak_period_input, border=10, flag=wx.ALL)
+        peak_period_sizer.Add(self.peak_period_input, border=10, flag=wx.ALL)
         peak_season_sizer.Add(peak_season_label, border=10, flag=wx.ALL)
-        peak_season_sizer.Add(peak_season_input, border=10, flag=wx.ALL)
+        peak_season_sizer.Add(self.peak_season_input, border=10, flag=wx.ALL)
 
         # Add each sizer to the options_sizer
         options_sizer.Add(off_peak_price_sizer)

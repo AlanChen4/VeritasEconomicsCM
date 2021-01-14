@@ -9,6 +9,8 @@ class TwoTOU(wx.Frame):
 
     def __init__(self, title, parent=None):
         wx.Frame.__init__(self, title=title, parent=parent)
+        self.tou_a = TOU(parent=self, plan_title='A')
+        self.tou_b = TOU(parent=self, plan_title='B')
         self.init_ui()
 
     def init_ui(self):
@@ -26,12 +28,10 @@ class TwoTOU(wx.Frame):
         plans_sizer.Add(status_quo)
 
         # Create TOU A and TOU B
-        tou_a = TOU(parent=self, plan_title='A')
-        tou_b = TOU(parent=self, plan_title='B')
 
         # Add TOU A and TOU B to plans sizer
-        plans_sizer.Add(tou_a)
-        plans_sizer.Add(tou_b)
+        plans_sizer.Add(self.tou_a)
+        plans_sizer.Add(self.tou_b)
 
         # Create results components
         results = Results(self)
