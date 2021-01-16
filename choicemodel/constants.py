@@ -1,11 +1,5 @@
 import numpy as np
 
-# Plan based coefficients
-PLAN_ONE_PEAK = np.array([0.34])
-PLAN_ONE_OFF_PEAK = np.array([0.08])
-
-PLAN_TWO_PEAK = np.array([0.27])
-PLAN_TWO_OFF_PEAK = np.array([0.09])
 
 # Base coefficients
 BASE = {
