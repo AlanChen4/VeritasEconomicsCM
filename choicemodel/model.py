@@ -1,8 +1,37 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
 
 from .constants import *
 from pathlib import Path
+
+
+def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
+    """
+    Show graphs based on data from the get_plans_function
+    :param lp1_rate_by_segment: Switch probability for each market segment in plan one
+    :param lp2_rate_by_segment: Switch probability for each market segment in plan two
+    """
+    p1_x_values = []
+    p2_x_values = []
+    p1_y_values = []
+    p2_y_values = []
+    for name1, value1, name2, value2 in zip(lp1_rate_by_segment.index, lp1_rate_by_segment.values,
+                                            lp2_rate_by_segment.index, lp2_rate_by_segment.values):
+        split_name_1, split_name_2 = name1[0].split(' - '), name2[0].split(' - ')
+        short_name_1, short_name_2 = f'{split_name_1[1]} ({split_name_1[0]})', \
+                                     f'{split_name_2[1]} ({split_name_2[0]})'
+        p1_x_values.append(short_name_1)
+        p2_x_values.append(short_name_2)
+        p1_y_values.append(value1[0])
+        p2_y_values.append(value2[0])
+
+    plt.figure(figsize=(12, 8))
+    plt.bar(p2_x_values, p2_y_values, label='Plan Two')
+    plt.bar(p1_x_values, p1_y_values, label='Plan One')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    plt.show()
 
 
 class Model:
