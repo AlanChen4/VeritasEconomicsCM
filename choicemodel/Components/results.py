@@ -1,5 +1,7 @@
 import wx
 
+from ..model import Model, show_graphs
+
 
 class Results(wx.Panel):
 
@@ -56,11 +58,21 @@ class Results(wx.Panel):
 
         # implement backend logic based on method
         if plan_type == 'TwoTOU':
-            # off_peak_price_a = self.GetParent().tou_a.off_peak_price_input.GetValue()
-            # peak_price_a = self.GetParent().tou_a.peak_price_input.GetValue()
-            # peak_period_a = self.GetParent().tou_a.peak_period_input.GetValue()
-            # peak_season_a = self.GetParent().tou_a.peak_season_input.GetValue()
-            print(plan_type)
+            plan_a = {
+                'off_peak': self.GetParent().tou_a.off_peak_price_input.GetValue(),
+                'peak_price': self.GetParent().tou_a.peak_price_input.GetValue(),
+                'peak_period': self.GetParent().tou_a.peak_period_input.GetValue(),
+                'peak_season': self.GetParent().tou_a.peak_season_input.GetValue()
+            }
+            plan_b = {
+                'off_peak': self.GetParent().tou_b.off_peak_price_input.GetValue(),
+                'peak_price': self.GetParent().tou_b.peak_price_input.GetValue(),
+                'peak_period': self.GetParent().tou_b.peak_period_input.GetValue(),
+                'peak_season': self.GetParent().tou_b.peak_season_input.GetValue()
+            }
+            choice_model = Model(plan_a, plan_b)
+            p_a, p_b = choice_model.get_plans()
+            show_graphs(p_a, p_b)
         elif plan_type == 'TwoFixed':
             print(plan_type)
         elif plan_type == 'OneEach':
