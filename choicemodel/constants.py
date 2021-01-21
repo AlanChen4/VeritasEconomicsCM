@@ -5,16 +5,16 @@ import numpy as np
 BASE = {
     'peak': np.array([-8.76]),
     'off_peak': np.array([-1.5064]),
-    'two_to_five': np.array([0.2482]),
-    'two_to_six': np.array([0.3314]),
-    'two_to_eight': np.array([0]),
-    'three_to_six': np.array([0.2726]),
-    'four_to_seven': np.array([0.1905]),
-    'five_to_seven': np.array([0.2247])
+    '(3 hours) 2PM to 5PM': np.array([0.2482]),
+    '(4 hours) 2PM to 6PM': np.array([0.3314]),
+    '(6 hours) 2PM to 8PM': np.array([0]),
+    '(3 hours) 3PM to 6PM': np.array([0.2726]),
+    '(3 hours) 4PM to 7PM': np.array([0.1905]),
+    '(2 hours) 5PM to 7PM': np.array([0.2247])
 }
 
 # Summer and winter coefficients
 SEASONS = {
-    'summer': np.array([-0.2002]),
-    'summer_and_winter': np.array([0])
+    'Summer': np.array([-0.2002]),
+    'Summer and Winter': np.array([0])
 }
