@@ -27,8 +27,8 @@ def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
         p2_y_values.append(value2[0])
 
     plt.figure(figsize=(12, 8))
-    plt.bar(p2_x_values, p2_y_values, label='Plan Two')
     plt.bar(p1_x_values, p1_y_values, label='Plan One')
+    plt.bar(p2_x_values, p2_y_values, label='Plan Two')
     plt.xticks(rotation=90)
     plt.tight_layout()
     plt.show()
@@ -36,16 +36,20 @@ def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
 
 class Model:
 
-    def __init__(self):
-        self.p1_peak = np.array([0.34])
-        self.p1_off_peak = np.array([0.08])
-        self.p1_peak_time = BASE['two_to_five']
-        self.p1_peak_season = SEASONS['summer']
+    def __init__(self, plan_a, plan_b):
+        """
+        :param plan_a: Array containing information belonging to plan A
+        :param plan_b: Array containing information belonging to plan B
+        """
+        self.p1_off_peak = np.array([float(plan_a['off_peak'][1:])])  # [1:] is to remove dollar sign
+        self.p1_peak = np.array([float(plan_a['peak_price'][1:])])
+        self.p1_peak_time = BASE[plan_a['peak_period']]
+        self.p1_peak_season = SEASONS[plan_a['peak_season']]
 
-        self.p2_peak = np.array([0.27])
-        self.p2_off_peak = np.array([0.09])
-        self.p2_peak_time = BASE['two_to_six']
-        self.p2_peak_season = SEASONS['summer']
+        self.p2_off_peak = np.array([float(plan_b['off_peak'][1:])])
+        self.p2_peak = np.array([float(plan_b['peak_price'][1:])])
+        self.p2_peak_time = BASE[plan_b['peak_period']]
+        self.p2_peak_season = SEASONS[plan_b['peak_season']]
 
     def get_plans(self):
         """
