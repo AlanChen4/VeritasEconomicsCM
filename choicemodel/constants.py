@@ -20,7 +20,7 @@ SEASONS = {
 }
 
 # group block index to name
-block_group_to_name = {
+BLOCK_GROUP_INDEX_TO_NAME = {
     '1': 'AE - Top Tier',
     '2': 'AE - Professional Pride',
     '3': 'AE - Boomburbs',
