@@ -54,7 +54,7 @@ class GeoModel:
         # add longitude value
         df['longitude'] = df.apply(lambda x: GEO_ID_TO_COOR[str(x.name)][1], axis=1)
 
-
-if __name__ == '__main__':
-    gm = GeoModel()
-    gm.create_model()
+    def show_map(self):
+        tn = gpd.read_file(self.shapefile_path)
+        tn.plot()
+        plt.show()
