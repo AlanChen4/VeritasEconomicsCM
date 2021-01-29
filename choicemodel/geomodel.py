@@ -54,7 +54,22 @@ class GeoModel:
         # add longitude value
         df['longitude'] = df.apply(lambda x: GEO_ID_TO_COOR[str(x.name)][1], axis=1)
 
-    def show_map(self):
+        # create GeoDataFrame
+        gdf = gpd.GeoDataFrame(
+            df, geometry=gpd.points_from_xy(df.longitude, df.latitude)
+        )
+
+        return gdf
+
+    def show_map(self, gdf):
+        fig, ax = plt.subplots()
+        ax.set_aspect('equal')
+
+        # import TN shapefile
         tn = gpd.read_file(self.shapefile_path)
-        tn.plot()
+        tn.plot(ax=ax, color='white', edgecolor='black')
+
+        # plot GeoDataFrame
+        gdf.plot(ax=ax, column='households', markersize=1)
+
         plt.show()
