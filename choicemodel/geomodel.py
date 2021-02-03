@@ -1,11 +1,11 @@
 import geopandas as gpd
-import geoplot as g_plt
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
 
 from .constants import GEO_ID_TO_COOR
 from pathlib import Path
+from shapely.geometry import Point
 
 
 class GeoModel:
@@ -13,27 +13,27 @@ class GeoModel:
     def __init__(self,
                  shapefile_path='/data/tn/tl_2016_47_cousub.shp',
                  tn_data_path='/data/tn_data.csv',
-                 conversion_path='/data/convert.csv'):
+                 geomap_model_path='/data/geomap_model.csv'):
         self.shapefile_path = str(Path(os.path.dirname(__file__)).parent) + shapefile_path
         self.tn_data_path = str(Path(os.path.dirname(__file__)).parent) + tn_data_path
-        self.conversion_path = str(Path(os.path.dirname(__file__)).parent) + conversion_path
+        self.geomap_model_path = str(Path(os.path.dirname(__file__)).parent) + geomap_model_path
 
-    def create_model(self):
+    def create_csv_model(self):
         """
         Makes all the conversions and transformations necessary to display the information
-        on the geo plot
+        on the geo plot. Final output is in csv file format
 
         - value assigned to each block group is through this calculation:
             - # of households in each block group x probability of switching
         """
         # read data into following dataframe format: (this will be used later to make plot)
         #
-        #                name         lat     lon     # households     % prob switching
-        # 47165-blah   top tier       36      -84          x                 .05
-        #     .            .          .        .           .                  .
-        #     .            .          .        .           .                  .
-        #     .            .          .        .           .                  .
-        # 47231-blah   professional   36      -84          x                 .05
+        #                name         lat     lon     # households     % prob switching     block group
+        # 47165-blah   top tier       36      -84          x                 .05               geo_id
+        #     .            .          .        .           .                  .                  .
+        #     .            .          .        .           .                  .                  .
+        #     .            .          .        .           .                  .                  .
+        # 47231-blah   professional   36      -84          x                 .05               geo_id
 
         # read in file and set block group geo_id as index
         df = pd.read_csv(self.tn_data_path, index_col=0)
@@ -59,17 +59,38 @@ class GeoModel:
             df, geometry=gpd.points_from_xy(df.longitude, df.latitude)
         )
 
-        return gdf
-
-    def show_map(self, gdf):
-        fig, ax = plt.subplots()
-        ax.set_aspect('equal')
-
-        # import TN shapefile
+        # import shapefile to check for overlapping block groups
         tn = gpd.read_file(self.shapefile_path)
-        tn.plot(ax=ax, color='white', edgecolor='black')
 
-        # plot GeoDataFrame
-        gdf.plot(ax=ax, column='households', markersize=1)
+        # check for overlapping block groups
+        gdf['GEOID'] = gdf.apply(self.search_block_group, args=(tn,), axis=1)
+        df = pd.DataFrame(gdf)
+        df.to_csv('geomap_model.csv')
 
+    @staticmethod
+    def search_block_group(geo_id_row, shapefile):
+        for index, row in shapefile.iterrows():
+            if row['geometry'].contains(Point(
+                geo_id_row['longitude'], geo_id_row['latitude']
+            )):
+                print(row['GEOID'])
+                return row['GEOID']
+
+    def show_map(self):
+        # import TN shapefile and convert GEOID column to numeric data type
+        tn = gpd.read_file(self.shapefile_path)
+        tn['GEOID'] = pd.to_numeric(tn['GEOID'])
+
+        # import geomap model
+        geo_model = pd.read_csv(self.geomap_model_path)
+        geo_model = geo_model.drop(['geometry'], axis=1)
+
+        # merge datasets
+        for_plotting = tn.merge(geo_model, left_on='GEOID', right_on='GEOID')
+
+        # plot
+        fig, ax = plt.subplots(1, figsize=(14,6))
+        ax.set_title('Please work')
+
+        for_plotting.plot(column='households', cmap='Reds', linewidth=1, ax=ax, edgecolor='0.5')
         plt.show()
