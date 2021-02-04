@@ -10,9 +10,11 @@ achieve utility objectives.
 
 ![geomap](img/geomap.png)
 ## Installation
-####Python
+
+###Python
 Download the latest version of Python from https://www.python.org/downloads/
-####Project Dependencies
+
+###Project Dependencies
 Most of the dependencies needed for development can be installed using the package manager [pip](https://pip.pypa.io/en/stable/).
 ```bash
 pip install requirements.txt
