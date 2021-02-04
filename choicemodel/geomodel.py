@@ -89,6 +89,7 @@ class GeoModel:
 
         # plot
         fig, ax = plt.subplots(1, figsize=(14, 6))
+        fig.canvas.set_window_title('Market Segments Visualized')
         ax.set_title('Market Segments Visualized')
 
         for_plotting.plot(column='households', cmap='Reds', linewidth=1, ax=ax, edgecolor='0.6',
