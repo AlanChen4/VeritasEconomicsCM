@@ -73,7 +73,6 @@ class GeoModel:
             if row['geometry'].contains(Point(
                 geo_id_row['longitude'], geo_id_row['latitude']
             )):
-                print(row['GEOID'])
                 return row['GEOID']
 
     def show_map(self):
@@ -89,8 +88,10 @@ class GeoModel:
         for_plotting = tn.merge(geo_model, left_on='GEOID', right_on='GEOID')
 
         # plot
-        fig, ax = plt.subplots(1, figsize=(14,6))
-        ax.set_title('Please work')
+        fig, ax = plt.subplots(1, figsize=(14, 6))
+        ax.set_title('Market Segments Visualized')
 
-        for_plotting.plot(column='households', cmap='Reds', linewidth=1, ax=ax, edgecolor='0.5')
+        for_plotting.plot(column='households', cmap='Reds', linewidth=1, ax=ax, edgecolor='0.6',
+                          legend=True, legend_kwds={'loc': 'lower right'},
+                          scheme='quantiles')
         plt.show()
