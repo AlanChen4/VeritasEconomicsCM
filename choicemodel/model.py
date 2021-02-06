@@ -27,10 +27,16 @@ def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
         p2_y_values.append(value2[0])
 
     plt.figure(figsize=(12, 8))
-    plt.bar(p1_x_values, p1_y_values, label='Plan One')
-    plt.bar(p2_x_values, p2_y_values, label='Plan Two')
+    plt.bar(p1_x_values, p1_y_values, label='Plan One', color='orange')
+    plt.bar(p2_x_values, p2_y_values, label='Plan Two', color='royalblue')
     plt.xticks(rotation=90)
     plt.tight_layout()
+
+    # add legend: plan A is orange, plan B is blue
+    colors = {'Plan A': 'orange', 'Plan B': 'royalblue'}
+    labels = list(colors.keys())
+    handles = [plt.Rectangle((0, 0), 1, 1, color=colors[label]) for label in labels]
+    plt.legend(handles, labels)
     plt.show()
 
 
