@@ -1,7 +1,5 @@
 import wx
 
-from .one_each import OneEach
-from .two_fixed import TwoFixed
 from .two_tou import TwoTOU
 
 
@@ -36,14 +34,6 @@ class ChoiceModelFrame(wx.Frame):
         two_time_button = wx.Button(self, label="Two Time-of-Use (TOU) Plans")
         two_time_button.Bind(wx.EVT_BUTTON, self.calculate_two_tou)
         options_sizer.Add(two_time_button, border=10, proportion=1, flag=wx.ALL | wx.EXPAND)
-
-        two_fixed_button = wx.Button(self, label="Two Fixed Bill Plans")
-        two_fixed_button.Bind(wx.EVT_BUTTON, self.calculate_two_fixed)
-        options_sizer.Add(two_fixed_button, border=10, proportion=1,  flag=wx.ALL | wx.EXPAND)
-
-        one_each_button = wx.Button(self, label="One TOU and One Fixed Bill Plan")
-        one_each_button.Bind(wx.EVT_BUTTON, self.calculate_one_each)
-        options_sizer.Add(one_each_button, border=10, proportion=1, flag=wx.ALL | wx.EXPAND)
 
         # Add individual box sizer(s) to main box sizer(vbox)
         vbox.Add(title_label, flag=wx.ALL | wx.EXPAND, border=20)
