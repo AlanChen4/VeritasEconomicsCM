@@ -32,17 +32,17 @@ class Results(wx.Panel):
         service_sizer.Add(service_label)
         service_sizer.Add(service_button, flag=wx.ALL, border=10)
 
-        # zip code
-        zip_sizer = wx.BoxSizer(wx.VERTICAL)
-        zip_label = wx.StaticText(self, label='By Zip Code')
-        zip_button = wx.Button(self, label='Calculate')
-        zip_button.Bind(wx.EVT_BUTTON, self.calculate_zip)
-        zip_sizer.Add(zip_label)
-        zip_sizer.Add(zip_button, flag=wx.ALL, border=10)
+        # geo-model
+        geo_sizer = wx.BoxSizer(wx.VERTICAL)
+        geo_label = wx.StaticText(self, label='Load Geomodel')
+        geo_button = wx.Button(self, label='Load')
+        geo_button.Bind(wx.EVT_BUTTON, self.calculate_geo)
+        geo_sizer.Add(geo_label)
+        geo_sizer.Add(geo_button, flag=wx.ALL, border=10)
 
         calculate_sizer.Add(calculate_service_label, flag=wx.ALL, border=10)
         calculate_sizer.Add(service_sizer, flag=wx.LEFT, border=20)
-        calculate_sizer.Add(zip_sizer, flag=wx.LEFT, border=20)
+        calculate_sizer.Add(geo_sizer, flag=wx.LEFT, border=20)
 
         root_sizer.Add(results_sizer)
         root_sizer.Add(calculate_sizer)
@@ -70,17 +70,23 @@ class Results(wx.Panel):
                 'peak_period': self.GetParent().tou_b.peak_period_input.GetValue(),
                 'peak_season': self.GetParent().tou_b.peak_season_input.GetValue()
             }
+            # return if any of the inputs are empty, as this will result in errors for the model
+            for a, b in zip(plan_a.values(), plan_b.values()):
+                if a == '' or b == '':
+                    error_popup = wx.MessageDialog(None, "Please make sure that no inputs are empty!")
+                    error_popup.ShowModal()
+                    return
             choice_model = Model(plan_a, plan_b)
             p_a, p_b = choice_model.get_plans()
             show_graphs(p_a, p_b)
+        # 2/5: Currently these are unsupported
         elif plan_type == 'TwoFixed':
             print(plan_type)
         elif plan_type == 'OneEach':
             print(plan_type)
 
-    def calculate_zip(self, *args):
+    def calculate_geo(self, *args):
         """
-        This function is bound to the calculate by Zip Code button
+        This function is bound to the Load Geomodel button
         """
-        plan_type = type(self.GetParent()).__name__
-        print('Calculate by Zip Code: ', plan_type)
+        print('Loading Geomodel')
