@@ -1,5 +1,6 @@
 import wx
 
+from ..geomodel import GeoModel
 from ..model import Model, show_graphs
 
 
@@ -55,7 +56,28 @@ class Results(wx.Panel):
         """
         # determine plan type by calling name magic method on parent widget
         plan_type = type(self.GetParent()).__name__
+        plan_a, plan_b = self.get_info(plan_type)
+        if plan_a is not None and plan_b is not None:
+            choice_model = Model(plan_a, plan_b)
+            p_a, p_b = choice_model.get_plans()
+            show_graphs(p_a, p_b)
 
+    def calculate_geo(self, *args):
+        """
+        This function is bound to the Load Geo model button
+        """
+        plan_type = type(self.GetParent()).__name__
+        plan_a, plan_b = self.get_info(plan_type)
+        if plan_a is not None and plan_b is not None:
+            geo_model = GeoModel()
+            geo_model.show_map()
+
+    def get_info(self, plan_type):
+        """
+        Checks if all inputs are complete and then returns the values for each
+        :param plan_type: either TOU, OneEach, or TwoFixed
+        :return: inputs for plan A and B respectively
+        """
         # implement backend logic based on method
         if plan_type == 'TwoTOU':
             plan_a = {
@@ -75,18 +97,10 @@ class Results(wx.Panel):
                 if a == '' or b == '':
                     error_popup = wx.MessageDialog(None, "Please make sure that no inputs are empty!")
                     error_popup.ShowModal()
-                    return
-            choice_model = Model(plan_a, plan_b)
-            p_a, p_b = choice_model.get_plans()
-            show_graphs(p_a, p_b)
+                    return None, None
+            return plan_a, plan_b
         # 2/5: Currently these are unsupported
         elif plan_type == 'TwoFixed':
             print(plan_type)
         elif plan_type == 'OneEach':
             print(plan_type)
-
-    def calculate_geo(self, *args):
-        """
-        This function is bound to the Load Geomodel button
-        """
-        print('Loading Geomodel')
