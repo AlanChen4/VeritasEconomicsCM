@@ -77,8 +77,14 @@ class GeoModel:
 
     def show_map(self):
         # import TN shapefile and convert GEOID column to numeric data type
-        tn = gpd.read_file(self.shapefile_path)
+        tn = gpd.read_file(self.shapefile_path, names=['GEOID', 'geometry'])
         tn['GEOID'] = pd.to_numeric(tn['GEOID'])
+
+        # remove unused columns
+        unused_geo_attributes = list(tn.columns)
+        unused_geo_attributes.remove('GEOID')
+        unused_geo_attributes.remove('geometry')
+        tn = tn.drop(columns=unused_geo_attributes)
 
         # import geomap model
         geo_model = pd.read_csv(self.geomap_model_path)
