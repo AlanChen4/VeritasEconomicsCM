@@ -87,11 +87,14 @@ class GeoModel:
         tn = tn.drop(columns=unused_geo_attributes)
 
         # import geomap model
-        geo_model = pd.read_csv(self.geomap_model_path)
-        geo_model = geo_model.drop(['geometry'], axis=1)
+        geo_model = pd.read_csv(self.geomap_model_path, usecols=['households', 'GEOID'])
 
         # merge datasets
         for_plotting = tn.merge(geo_model, left_on='GEOID', right_on='GEOID')
+
+        # sum rows based on GEOID to get total number of households in each GEOID
+        aggregation_functions = {'geometry': 'first', 'households': 'sum'}
+        for_plotting = for_plotting.groupby(for_plotting['GEOID']).aggregate(aggregation_functions)
 
         # plot
         fig, ax = plt.subplots(1, figsize=(14, 6))
