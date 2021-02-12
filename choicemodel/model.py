@@ -26,10 +26,19 @@ def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
         p1_y_values.append(value1[0])
         p2_y_values.append(value2[0])
 
+    # Number of total groups of bars
+    n = len(p1_x_values)
+
+    # Position of bars on x-axis
+    ind = np.arange(n)
+
+    # Width of a bar
+    width = 0.3
+
     plt.figure(figsize=(12, 8))
-    plt.bar(p1_x_values, p1_y_values, label='Plan One', color='orange')
-    plt.bar(p2_x_values, p2_y_values, label='Plan Two', color='royalblue')
-    plt.xticks(rotation=90)
+    plt.bar(ind, p1_y_values, width, label='Plan One', color='orange')
+    plt.bar(ind + width, p2_y_values, width, label='Plan Two', color='royalblue')
+    plt.xticks(ind + width / 2, p1_x_values, rotation=90)
     plt.tight_layout()
 
     # add legend: plan A is orange, plan B is blue
