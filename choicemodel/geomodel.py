@@ -8,6 +8,21 @@ from pathlib import Path
 from shapely.geometry import Point
 
 
+def household_after_prob_rate(row, prob_a, prob_b):
+    """
+    Multiply and return the household count after considering probability for switchover
+    :param row: row containing data (name, households)
+    :param prob_a: switch over rates under plan A
+    :param prob_b: switch over rates under plan B
+    :return: household count
+    """
+    try:
+        return row['households'] * (prob_a.loc[row['name']]['plan 1 rate'] + prob_b.loc[row['name']]['plan 2 rate'])
+    # this occurs when a row is passed without a name
+    except KeyError:
+        pass
+
+
 class GeoModel:
 
     def __init__(self,
@@ -63,7 +78,7 @@ class GeoModel:
         tn = gpd.read_file(self.shapefile_path)
 
         # check for overlapping block groups
-        gdf['GEOID'] = gdf.apply(self.search_block_group, args=(tn,), axis=1)
+        gdf['GEOID'] = gdf.apply(self.search_block_group, shapefile=tn, axis=1)
         df = pd.DataFrame(gdf)
         df.to_csv('geomap_model.csv')
 
@@ -71,11 +86,19 @@ class GeoModel:
     def search_block_group(geo_id_row, shapefile):
         for index, row in shapefile.iterrows():
             if row['geometry'].contains(Point(
-                geo_id_row['longitude'], geo_id_row['latitude']
+                    geo_id_row['longitude'], geo_id_row['latitude']
             )):
                 return row['GEOID']
 
-    def show_map(self):
+    def show_map(self, prob_a, prob_b):
+        """
+        :param prob_a: switchover rate for plan A
+        :param prob_b: switchover rate for plan B
+        """
+        # convert index type from tuple to str
+        prob_a.index = [i[0] for i in list(prob_a.index)]
+        prob_b.index = [i[0] for i in list(prob_b.index)]
+
         # import TN shapefile and convert GEOID column to numeric data type
         tn = gpd.read_file(self.shapefile_path, names=['GEOID', 'geometry'])
         tn['GEOID'] = pd.to_numeric(tn['GEOID'])
@@ -87,7 +110,11 @@ class GeoModel:
         tn = tn.drop(columns=unused_geo_attributes)
 
         # import geomap model
-        geo_model = pd.read_csv(self.geomap_model_path, usecols=['households', 'GEOID'])
+        geo_model = pd.read_csv(self.geomap_model_path, usecols=['households', 'GEOID', 'name'])
+
+        # multiply by participation rates
+        geo_model['households'] = geo_model.apply(household_after_prob_rate, prob_a=prob_a, prob_b=prob_b,
+                                                  axis=1)
 
         # merge datasets
         for_plotting = tn.merge(geo_model, left_on='GEOID', right_on='GEOID')

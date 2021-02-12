@@ -69,8 +69,11 @@ class Results(wx.Panel):
         plan_type = type(self.GetParent()).__name__
         plan_a, plan_b = self.get_info(plan_type)
         if plan_a is not None and plan_b is not None:
+            # create model on backend to find switch probability
+            choice_model = Model(plan_a, plan_b)
+            prob_a, prob_b = choice_model.get_plans()
             geo_model = GeoModel()
-            geo_model.show_map()
+            geo_model.show_map(prob_a, prob_b)
 
     def get_info(self, plan_type):
         """
