@@ -35,7 +35,7 @@ def show_graphs(lp1_rate_by_segment, lp2_rate_by_segment):
     # Width of a bar
     width = 0.3
 
-    plt.figure(figsize=(12, 8))
+    plt.figure('Bar Graph Model', figsize=(12, 8))
     plt.bar(ind, p1_y_values, width, label='Plan One', color='orange')
     plt.bar(ind + width, p2_y_values, width, label='Plan Two', color='royalblue')
     plt.xticks(ind + width / 2, p1_x_values, rotation=90)
