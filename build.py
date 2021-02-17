@@ -21,5 +21,6 @@ for filename in os.listdir(output_folder):
 # build executable from spec file
 PyInstaller.__main__.run([
     'main.spec',
-    '-D'  # one folder bundle that contains executable
+    '-D',  # one folder bundle that contains executable
+    '--noconsole'
 ])
