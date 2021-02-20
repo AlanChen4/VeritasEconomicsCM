@@ -27,5 +27,8 @@ pip install Cartopy
 Then download the .whl files for the dependencies [here](https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal).
 
 ## Usage
+Inputs page:
 ![input](img/input.png)
+
+Graph output page:
 ![graph](img/graph.png)
