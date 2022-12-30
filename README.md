@@ -1,4 +1,4 @@
-# VeritasEconomicsCM
+# choice-model-wxpython
 Despite the substantial potential for residential demand response through Time of Use (TOU) rates TOU offerings are limited.
 When utilities do offer TOU rates, uptake can range from almost zero to over 40 percent.
 Residential demand response is challenging because it requires enrolling many households to be
